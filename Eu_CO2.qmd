@@ -1,0 +1,400 @@
+# Let's start analysing the data!
+
+## Let's load our libraries and the data
+
+```{r}
+library(ggplot2) 
+library(jsonlite) 
+library(dplyr) 
+library(readxl)
+library(pivottabler)
+library(tidyr)
+library(forcats)
+library(GGally)
+library(lattice)
+library(stringr)
+library(httr)
+library(sf)
+library(leaflet)
+```
+
+```{r}
+eu_horizon_co2 <- read.csv("../Data/Working/eu_horizon_co2_green_energy_final.csv") 
+```
+
+## **Identify countries with the most university involvement in green projects:**
+
+Aggregate number of projects and plot data with a stacked bar chart:
+
+```{r}
+eu_horizon_co2$ecMaxContribution <- as.integer(eu_horizon_co2$ecMaxContribution)
+
+```
+
+```{r}
+projects_by_country <- eu_horizon_co2 %>% 
+  group_by(country_name) %>% 
+  summarise(total = sum(ecMaxContribution))
+```
+
+I used the `forcats` library `fct_infreq()` function here to automatically sort the country counts in ascending order the applied the fct_rev to inverse it, showing us the descending order. I could have applied this transformation at the dataframe level with `mutate(country_name = fct_reorder(country_name, total, .desc = TRUE))` but decided against it.
+
+```{r}
+ggplot(data = eu_horizon_co2, aes(y = fct_rev(fct_infreq(country_name)), fill = organisation_type)) +
+  geom_bar() +
+  labs(title = "Projects by Country and Organisation Type",
+       x = "Projects count",
+       y = "Country",
+       fill = "Organisation Type")
+```
+
+## **Identify most active EU-based universities involved in green projects**
+
+Aggregate number of projects and plot data with a bar chart
+
+```{r}
+horizon_unis <- eu_horizon_co2 %>% filter(activity_type == "HES") # Filter for universities
+```
+
+Get the number of projects per university, aggregate based on University count
+
+```{r}
+top_10_universities <- table(horizon_unis$name)
+```
+
+Now let's build a new table grouping by the university and aggregating some data we need on a uni level:
+
+```{r}
+projects_per_uni <- horizon_unis %>%
+  group_by(name) %>%
+  summarise(
+    project_count = n(), # Count of projects
+    total_cost = sum(total_cost), # Sum of total costs
+    country_co2 = first(cumulative_co2), # First Co2 value
+    country = first(country_name), # First country value
+    .groups = 'drop'
+    
+  )
+print(head(projects_per_uni))
+```
+
+**Let's take a look at projects per country and break it down by organisation type:**
+
+```{r}
+projects_per_country_by_org_type_yab <- xtabs(
+  ~ organisation_type + country_name, 
+  data = eu_horizon_co2
+)
+```
+
+```{r}
+
+# Or we can use the tidyr pivot_wider() function
+
+projects_per_country_by_org_type <- eu_horizon_co2 %>%
+  group_by(country_name, organisation_type) %>%
+  summarise(count = n(), .groups = 'drop') %>%
+  pivot_wider(
+    names_from = organisation_type,
+    values_from = count,
+    values_fill = 0
+  )
+print(head(projects_per_country_by_org_type))
+```
+
+## **Identify trends in started projects per country per year**
+
+```{r}
+
+projects_by_year <- eu_horizon_co2 %>%
+  group_by(start_date, country_name) %>%
+  summarise(count = n(), .groups = 'drop')
+
+```
+
+Plot data with a line plot:
+
+```{r}
+ggplot(data = projects_by_year, aes(x = start_date, y = count, color = country_name)) +
+  geom_line() +
+  labs(
+    title = "Projects Started by Country each Year",
+    x = "Year",
+    y = "Projects Count",
+    color = "Country"
+  )
+```
+
+**4. Explore relationship between number of projects per university, energy project funding per uni, and a country's Co2 emission**
+
+Filter plot data with a parallel co-ordinates plot
+
+```{r}
+projects_per_uni_clean <- projects_per_uni %>%
+  filter(!is.na(country_co2))
+
+```
+
+```{r}
+parallelplot(projects_per_uni_clean[, c("project_count", "total_cost", "country_co2")])
+```
+
+I'm seeing that Parallel plots don't really seem to provide the helpful detail here in RStudio that they do in Knime's interactive tool. So I've added a few other visualisation options to get a sense of the relationships.
+
+First, a scatterplot showing project count and CO2 levels. This can be helpful to see the amount of funding that went towards countries with high emission levels, telling us a possible policy-push towards climate interventions are prioritised. What we can't see here are the actual countries or the projects themselves.
+
+```{r}
+ggplot(data = projects_per_uni_clean, aes(x = project_count, y = total_cost, color = country_co2, size = project_count)) +
+  geom_point(alpha = 0.6) +
+  scale_color_gradient(low = "green", high = "red") +
+  labs(
+    title = "Horizon 20/21 Projects, Funding, and Country CO2 Emissions",
+    x = "Project Count",
+    y = "Total Cost",
+    color = "Country CO2",
+    size = "Project Count"
+  )
+```
+
+So let's look at a faceted scatter plot, which takes a per-country look at project counts and total cost of projects, and the respective country's CO2 emission levels. It's sort of hard to see properly (I need to learn more ggplot prettifying techniques), but some things stand out:
+
+-   Germany, the UK and France have the highest CO2 emission levels, and also have lots of projects.
+
+-   Most of these projects are in sub 500M euro level, but Germany and UK both have a few projects in 500M-1B ranges.
+
+-   France's projects are mostly under 500M
+
+-   Denmark is not a huge polluter, but has a couple of pretty expensive projects on the go
+
+-   Luxembourg, Malta, Bulgaria, Estonia, Latvia, Romania, Slovakia and Slovenia have the fewest projects. and are among the lowest polluters
+
+```{r}
+ggplot(data = projects_per_uni_clean, aes(x = project_count, y = total_cost, color = country_co2)) +
+  geom_point(alpha = 0.6) +
+  facet_wrap(~ country) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_color_gradient(low = "green", high = "red") +
+  labs(
+    title = "Universities: Projects, Funding, and Country CO2 Emissions",
+    x = "Project Count",
+    y = "Total Cost (Millions)",
+    color = "Country CO2"
+  )
+```
+
+## Who are the biggest polluters?
+
+```{r}
+biggest_polluters <- projects_per_uni_clean %>%
+  group_by(country) %>%
+  summarise(
+    CO2 = sum(country_co2, na.rm = TRUE)
+  ) %>%
+  arrange(desc(CO2)) %>%
+  slice_head(n=10)
+
+```
+
+```{r}
+ggplot(data = biggest_polluters, aes(x= reorder(country, -CO2), y = CO2)) +
+  geom_col(fill = "gray70") +
+  geom_text(aes(label = format(round(CO2, 0), big.mark = ",")), 
+          vjust = 1.5, size = 2.5, color = "pink") +
+  theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+  labs(
+    title = "Top 10 European Polluters 2020-2024",
+    x = "Country",
+    y = "CO2 Emmissions"
+  )
+```
+
+## Let's see how this compares to how much each country spent on green energy projects
+
+-   First, let's add a funding column to the table we're working with, we'll just run the above code again with 'funding' added as a column under summarise:
+
+```{r}
+biggest_polluters <- projects_per_uni_clean %>%
+  group_by(country) %>%
+  summarise(
+    CO2 = sum(country_co2, na.rm = TRUE),
+    funding = sum(total_cost, na.rm = TRUE)
+  ) %>%
+  arrange(desc(CO2)) %>%
+  slice_head(n=10)
+```
+
+Let's create some funding buckets so the data will display nice and clean:
+
+```{r}
+biggest_polluters <- biggest_polluters %>%
+  mutate(funding_bucket = cut(
+    funding,
+    breaks = c(0, 500000000, 1000000000, 2000000000, 5277744643),
+    labels = c("< 500M", "500M - 1B", "1B - 2B", "> 2B")))
+```
+
+```{r}
+ggplot(data = biggest_polluters, aes(x= reorder(country, -CO2), y = CO2, fill = funding_bucket)) +
+  geom_col() +
+  scale_fill_viridis_d() +
+  theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+  labs(
+    title = "Top 10 European Polluters and EU Horizon Funding for Green Energy Projects 2020-2024",
+    x = "Country",
+    y = "CO2 Emissions",
+    fill = "Funding"
+  )
+```
+
+# Geo-locating the universities
+
+```{r}
+install.packages("httr")
+library(httr)
+
+# Define the API endppoint URL
+url <- "https://nominatim.openstreetmap.org/search?<params>"
+
+# Send a GET request to the API endpoing
+response <- GET(url)
+
+# Check if the request was successful (status code 200)
+if (status_code(response) == 200) {
+  # Print the response content (data retrieved from API)
+  print(content(response))
+} else {
+  print(paste("Error: ", status_code(response)))
+}
+```
+
+## Workflow
+
+Start with full eu table, get address column and add to projects per uni clean, with separate address columns (street, postcode, city, country), clean/trim each component (remove leading/trailing whitespace):
+
+```{r}
+
+# First, let's filter the EU dataset by distinct university (so each uni has 1 observation)
+eu_horizon_co2_per_uni <- eu_horizon_co2 %>%
+  distinct(name, .keep_all = TRUE) %>%
+  mutate(name = str_trim(name)) # Deal with any whitespaces before join
+
+projects_per_uni_clean <- projects_per_uni_clean %>%
+  mutate(name = str_trim(name)) # Deal with any whitespaces before join
+
+# Now join
+unis_with_geo <- projects_per_uni_clean %>%
+  left_join(eu_horizon_co2_per_uni, by = "name")
+```
+
+URL-encode each component (spaces become %20, special characters handled) using `URLencode():`
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  mutate(
+    street_encoded = URLencode(street),
+    post_code_encoded = URLencode(post_code),
+    city_encoded = URLencode(city),
+    country_name_encoded = URLencode(country_name)
+  )
+          
+```
+
+Concatenate components with `+` separators to create the search query string:
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  mutate(search_query = paste(street_encoded, post_code_encoded, city_encoded, country_name_encoded, sep = "+"))
+```
+
+Build full API URLs by pasting base URL + encoded query string:
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  mutate(api_url = paste0("https://nominatim.openstreetmap.org/search?q=", 
+                          search_query, 
+                          "&format=json&limit=1"))
+```
+
+We'll use `lapply()` to iterate through each URL and call `GET` on it, returning a list of response objects.
+
+In the `lapply()` function, the `function(url)` will create a temporary placeholder variable that receives each value from `unis_with_geo$api_url` one at a time so we can add a delay so as to not overburden the Nominatim server. We'll call the placeholder variable 'the_url' but we could call it anything:
+
+```{r}
+# Send a GET request to the API endpoing
+
+# lapply returns a list fo the same length as what you pass to it, each element has the 
+# function applied
+
+response <- lapply(unis_with_geo$api_url, function(the_url) {
+  Sys.sleep(1)
+  GET(the_url)
+})
+
+# Check status codes
+status_codes <- sapply(response, status_code)
+print(table(status_codes))
+
+```
+
+Parse JSON responses and extract latitude/longitude coordinates
+
+```{r}
+# We need to get the JSON in a readable format before we can extract the coordinates:
+
+parsed_responses <- lapply(response, function(resp) {
+  fromJSON(content(resp, as = "text"))
+})
+
+
+# Now let's get the coordinates - extract the lat and lon from each response
+
+coords_list <- lapply(parsed_responses, function(json) {
+  if (length(json) > 0) {
+    json[c("lat", "lon")]
+  } else {
+    data.frame(lat = NA, lon = NA)
+  }
+})
+
+
+# Let's take our list of data frames and row-binds them together into one data frame.
+coordinates <- bind_rows(coords_list)
+
+# Now let's bind these columns to our university data
+unis_with_geo <- bind_cols(unis_with_geo, coordinates)
+```
+
+Create geometry column with `sf::st_point()`. `crs = 4326` sets it to WGS84 (standard lat/lon coordinates), which is what you want for web mapping.
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  filter(!is.na(lat) & !is.na(lon)) %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+## Let's visualise the projects on a map
+
+```{r}
+
+leaflet(unis_with_geo) %>%
+  addTiles() %>%
+  addCircleMarkers(
+    popup = ~paste(name, "<br>", country_name, "<br>Projects:", project_count),
+    opacity = 0.7,
+    clusterOptions = markerClusterOptions()
+  )
+```
+
+Next things to explore:
+
+Check projects per university by topic in a stacked bar chart
+
+For another project:
+
+Which universities are making the most of the funds?
+
+-   Check projects
+
+-   Check outcomes
+
+-   Measure funding to outcomes if possible (stated in project proposals maybe?)

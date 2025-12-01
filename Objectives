@@ -1,0 +1,66 @@
+Visualise total Energy projects at country level and organisation level
+Identify and Visualise CO2 emissions at country level
+Visualise energy projects per year at country level
+Explore the Relationship between CO2 emissions and Energy Project Funding at country level
+Map Visualisation of funded projects 
+
+
+----
+
+
+Todos:
+1. Create filtered views/tibbles of relevant data - decide what columns to keep - DONE
+
+Data: Organisations
+What we need to know: Visualise Energy projects per EU *Country* and for *Organisations* per Country
+Cols to keep: projectID, name, activityType, full address (street, postCode, city, country)
+
+Data: Projects
+Need to know: Identify Energy *Projects* per Country per *year*
+Cols to keep: ids, startDates, totalCosts
+
+Data: EuroSciVoc
+Need to know: Identify *Energy* Projects per Country per year
+Cols to keep: projectID, euroSciVocTitle
+
+Data: Co2 Emissions
+Need to know: Identify and Visualise *EU Countries* with the Most and Least CO2 *Emissions*
+Cols to keep: country, year, iso_code, cumulative_co2
+
+Data: EU country and names
+Need to know: EU Countries
+Data to keep: Filter EU country (rows/observations) # Remove non-EU countries
+ 
+ 
+ 
+Filter by Green energy projects - title contains 'energy' DONE
+Change EurSocTitle to topic DONE
+Convert start date from string to datetime -> date yyyyMMdd, then extract the year, start_year DONE
+Group the project ids by topic so that if one project has multiple topics, it's just one observation DONE
+Check country names (e.g. Czechia -> Czech Republic) DONE
+
+ 
+ 
+ 
+ 
+ 
+ 
+2. Combine data: 
+- Org 2020 + Org 2021 - stack rows
+- EuroSciVoc 20 + 21 - stack
+  - Convert projectID in 2020 from character to integer, can't combine mixed types
+- Projects 20 + 21 - stack
+- Organisations and projects - Join tables (inner join). Key column = project ID
+
+Blend all data into one dataset - DONE
+
+
+2. Deal with NAs and duplicates in filtered data
+CO2 data: 22863 NAs cumulative_co2 - do we need to handle NAs in this dataset?
+
+Check for duplicates
+
+
+3. Make style changes
+- Change column names to snake_case - DONE
+- Sort columns as in pdf (e.g. ID first)
