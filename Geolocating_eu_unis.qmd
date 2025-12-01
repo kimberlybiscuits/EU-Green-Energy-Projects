@@ -1,0 +1,133 @@
+# Geo-locating the universities
+
+## Workflow
+
+Start with full eu table, get address column and add to projects per uni clean, with separate address columns (street, postcode, city, country), clean/trim each component (remove leading/trailing whitespace):
+
+```{r}
+
+# First, let's filter the EU dataset by distinct university (so each uni has 1 observation)
+eu_horizon_co2_per_uni <- eu_horizon_co2 %>%
+  distinct(name, .keep_all = TRUE) %>%
+  mutate(name = str_trim(name)) # Deal with any whitespaces before join
+
+projects_per_uni_clean <- projects_per_uni_clean %>%
+  mutate(name = str_trim(name)) # Deal with any whitespaces before join
+
+# Now join
+unis_with_geo <- projects_per_uni_clean %>%
+  left_join(eu_horizon_co2_per_uni, by = "name")
+```
+
+URL-encode each component (spaces become %20, special characters handled) using `URLencode():`
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  mutate(
+    street_encoded = URLencode(street),
+    post_code_encoded = URLencode(post_code),
+    city_encoded = URLencode(city),
+    country_name_encoded = URLencode(country_name)
+  )
+          
+```
+
+Concatenate components with `+` separators to create the search query string:
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  mutate(search_query = paste(street_encoded, post_code_encoded, city_encoded, country_name_encoded, sep = "+"))
+```
+
+Build full API URLs by pasting base URL + encoded query string:
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  mutate(api_url = paste0("https://nominatim.openstreetmap.org/search?q=", 
+                          search_query, 
+                          "&format=json&limit=1"))
+```
+
+We'll use `lapply()` to iterate through each URL and call `GET` on it, returning a list of response objects.
+
+In the `lapply()` function, the `function(url)` will create a temporary placeholder variable that receives each value from `unis_with_geo$api_url` one at a time so we can add a delay so as to not overburden the Nominatim server. We'll call the placeholder variable 'the_url' but we could call it anything:
+
+```{r}
+# Send a GET request to the API endpoing
+
+# lapply returns a list fo the same length as what you pass to it, each element has the 
+# function applied
+
+response <- lapply(unis_with_geo$api_url, function(the_url) {
+  Sys.sleep(1)
+  GET(the_url)
+})
+
+# Check status codes
+status_codes <- sapply(response, status_code)
+print(table(status_codes))
+
+```
+
+Parse JSON responses and extract latitude/longitude coordinates
+
+```{r}
+# We need to get the JSON in a readable format before we can extract the coordinates:
+
+parsed_responses <- lapply(response, function(resp) {
+  fromJSON(content(resp, as = "text"))
+})
+
+
+# Now let's get the coordinates - extract the lat and lon from each response
+
+coords_list <- lapply(parsed_responses, function(json) {
+  if (length(json) > 0) {
+    json[c("lat", "lon")]
+  } else {
+    data.frame(lat = NA, lon = NA)
+  }
+})
+
+
+# Let's take our list of data frames and row-binds them together into one data frame.
+coordinates <- bind_rows(coords_list)
+
+# Now let's bind these columns to our university data
+unis_with_geo <- bind_cols(unis_with_geo, coordinates)
+```
+
+Create geometry column with `sf::st_point()`. `crs = 4326` sets it to WGS84 (standard lat/lon coordinates), which is what you want for web mapping.
+
+```{r}
+unis_with_geo <- unis_with_geo %>%
+  filter(!is.na(lat) & !is.na(lon)) %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+## Let's visualise the projects on a map
+
+```{r}
+
+leaflet(unis_with_geo) %>%
+  addTiles() %>%
+  addCircleMarkers(
+    popup = ~paste(name, "<br>", country_name, "<br>Projects:", project_count),
+    opacity = 0.7,
+    clusterOptions = markerClusterOptions()
+  )
+```
+
+Next things to explore:
+
+Check projects per university by topic in a stacked bar chart
+
+For another project:
+
+Which universities are making the most of the funds?
+
+-   Check projects
+
+-   Check outcomes
+
+-   Measure funding to outcomes if possible (stated in project proposals maybe?)
