@@ -1,6 +1,8 @@
 # EU-Green-Energy-Projects
 Analysing funding allocated for research and innovation to universities across EU nations with high carbon emissions to localise and better understand green initiatives and how future partnerships can be developed.
 
+![Green Energy Funded Universities in Europe](Geolocating_unis.png)
+
 This project follows the BDTI Essentials course using R instead of KNIME: https://code.europa.eu/bdti/bdti-essentials-course
 Some of my visualisations differ from those in the course due to package limitation with R and an update in the data, but the conclusions drawn are largely similiar. I also inlcuded a couple of my own questions for analysis that weren't covered in the course.
 
