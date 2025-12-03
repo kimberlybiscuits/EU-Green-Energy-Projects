@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>geolocating_eu_unis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Geolocating_eu_unis_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Geolocating_eu_unis_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Geolocating_eu_unis_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Geolocating_eu_unis_files/libs/quarto-html/popper.min.js"></script>
+<script src="Geolocating_eu_unis_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Geolocating_eu_unis_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Geolocating_eu_unis_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Geolocating_eu_unis_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Geolocating_eu_unis_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Geolocating_eu_unis_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Geolocating_eu_unis_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Geolocating_eu_unis_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="Geolocating_eu_unis_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="Geolocating_eu_unis_files/libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="Geolocating_eu_unis_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="Geolocating_eu_unis_files/libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="Geolocating_eu_unis_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="Geolocating_eu_unis_files/libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="Geolocating_eu_unis_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="Geolocating_eu_unis_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="Geolocating_eu_unis_files/libs/leaflet-binding-2.2.3/leaflet.js"></script>
+<link href="Geolocating_eu_unis_files/libs/leaflet-markercluster-1.0.5/MarkerCluster.css" rel="stylesheet">
+<link href="Geolocating_eu_unis_files/libs/leaflet-markercluster-1.0.5/MarkerCluster.Default.css" rel="stylesheet">
+<script src="Geolocating_eu_unis_files/libs/leaflet-markercluster-1.0.5/leaflet.markercluster.js"></script>
+<script src="Geolocating_eu_unis_files/libs/leaflet-markercluster-1.0.5/leaflet.markercluster.freezable.js"></script>
+<script src="Geolocating_eu_unis_files/libs/leaflet-markercluster-1.0.5/leaflet.markercluster.layersupport.js"></script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="lets-visualise-the-projects-on-a-map" class="level2">
+<h2 class="anchored" data-anchor-id="lets-visualise-the-projects-on-a-map">Let’s visualise the projects on a map</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>unis <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"Data"</span>, <span class="st">"Processed"</span>, <span class="st">"unis_with_location.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 427 Columns: 30
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (19): name, country.x, activity_type, street, post_code, city, country.y...
+dbl (11): project_count, total_cost.x, country_co2, X, id, start_date, total...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>(unis) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">popup =</span> <span class="sc">~</span><span class="fu">paste</span>(name, <span class="st">"&lt;br&gt;"</span>, country_name, <span class="st">"&lt;br&gt;Projects:"</span>, project_count),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">opacity =</span> <span class="fl">0.7</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">clusterOptions =</span> <span class="fu">markerClusterOptions</span>()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Assuming "lon" and "lat" are longitude and latitude, respectively</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-bbb51000504bb789c9ef" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-bbb51000504bb789c9ef">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[57.01396,60.1857846,56.171028,52.4174875,60.4509367,50.0641425,52.2721599,56.9391593,47.9986509,47.5037959,44.4965073,51.7417504,52.864784,50.9746013,49.7863736,51.2447436,52.543973,56.1813391,51.5356766,51.6274189,47.481673,53.148923,41.0533085,57.6986143,52.5258523,37.9617844,54.3390593,51.5272,44.4468242,48.8491255,49.1887641,48.866783,41.8909554,41.1109495,53.1675194,55.681549,52.4089246,52.0748729,49.0392588,55.785937,52.6295932,47.55395,48.7823017,53.3758042,53.3314105,48.5244121,45.7854689,43.5653196,45.7798807,48.8335105,49.2098036,48.8453935,48.7123878,50.8434144,49.8995725,48.8414596,58.3881211,38.0151056,51.9176312,45.1899716,54.7765039,43.8026581,47.0692082,48.1608539,52.3891768,59.3491458,50.1326647,52.4479315,49.5744056,50.9294489,41.4062983,40.4421872,37.9831317,51.5341025,52.3827727,53.5401918,60.9769375,52.1424037,53.5687706,55.9102959,52.5128521,51.4464194,53.0557987,53.5400029,53.3680352,48.738095,54.7747687,53.5564216,47.7152527,48.154141,48.7802741,49.2353648,48.457532,48.8785181,49.6326531,50.8923937,58.2825264,52.5183402,48.5562782,48.8447758,48.7128391,48.860374,49.3876384,43.5706333,44.8060109,43.5683358,48.3101384,39.2912017,38.712297,41.1789352,38.7352456,62.8930376,38.742947,50.1277645,49.8685967,49.7881899,62.2376894,49.0094722,59.3475495,50.8780762,54.8988052,51.5125644,50.9236351,55.68012,47.5006839,59.3498183,46.147675,66.48364479999999,61.0647666,56.6558468,56.9159016,54.9528919,53.2300344,54.8943049,58.3977911,51.5139905,51.5544075,52.7636733,48.1509389,55.7063239,51.4867452,47.2699148,60.2241709,48.0811234,43.061248,47.3853829,51.8828559,48.8443464,47.2094128,58.5883733,59.2558502,49.444878,52.140104,65.059029,47.0883929,47.4917027,52.3942061,50.0190414,52.2216394,51.1077384,41.1115992,45.4778083,45.0624603,51.523663,50.7778344,50.7336038,56.9529098,53.219246,57.1183425,55.651687,53.3386558,51.4441576,49.4096353,44.4496028,43.8431986,45.6786658,43.7206078,48.1547473,48.8510537,52.24632,52.0957618,51.8168933,51.9018626,52.3340539,50.8813492,52.3422403,52.2775938,59.3639675,59.8154648,45.3256396,45.3357412,45.33829,43.5095954,45.8235166,45.800591,45.808909,45.807106,45.7952438,51.6091648,55.368644,46.2500455,53.2401489,52.0845157,59.3956136,61.4934627,58.381014,52.864784,48.829987,50.9184158,52.2735727,50.8385468,51.029484,47.069271,50.6838204,48.1490716,48.1990183,52.5121191,49.8748897,51.4843824,53.4635028,51.9985652,51.4486602,54.5727889,35.1501184,53.4697681,52.9580131,53.3442349,57.1649169,52.4709941,54.8910096,55.9474257,53.4663973,52.9387428,53.4552031,53.3816339,50.8643805,51.5655255,60.4500021,60.4556899,50.8457274,40.3182205,40.4373104,36.8368237,42.3405991,38.9920218,37.2596218,43.2704545,28.0991191,43.3617483,37.3818133,41.5590102,41.3792148,40.4295621,42.7989742,40.3393205,43.3708694,40.6332676,38.5729823,41.5507218,41.1470369,45.4343959,45.4609998,45.4489252,45.3276092,42.3516086,41.0663884,42.4136549,41.1205883,45.5377959,39.2175849,37.5036512,44.842302,43.7777178,44.4148535,43.2999394,38.1889554,45.4603865,44.6450538,40.8455638,40.8354212,45.4066496,38.1173529,43.1164615,41.901462,41.8529597,40.7790657,40.7249988,45.0696364,46.0668476,45.6587216,46.0662531,45.4386002,41.9074951,41.8647389,43.6928487,43.6178592,45.7044022,45.5182975,48.3353191,52.0376829,53.1072821,48.0802099,51.4631758,48.2365926,47.077724,48.7127198,47.2630635,46.6159972,51.3411859,49.484875,51.9636072,51.7086021,52.4004154,54.0880573,48.4251253,53.8353331,49.8011976,49.9942674,49.9262327,41.3865337,41.9859318,39.6411857,39.4708254,49.2570565,39.9904924,47.6899569,48.3379651,48.5663996,48.2131278,50.9278032,47.1742067,46.7677836,44.430762,44.1842823,46.7693009,45.6453253,44.9167635,50.6967157,49.4199193,47.3128007,50.6696831,45.7707628,43.2942477,44.8371333,48.3984291,47.7465496,47.2404456,47.7320726,50.6397836,50.6317911,45.8260427,50.4587129,43.6222386,50.4660792,43.3113411,49.8750248,48.1140972,48.5807106,47.5862198,43.5563945,47.3836761,48.7995562,49.504265,48.015584,45.1917853,45.4261167,50.8117216,47.2404456,48.8519064,48.8470126,48.854654,51.2229654,51.0471689,52.1566789,50.8471289,52.2432459,52.0851807,52.3685848,42.680638,51.8963622,53.2960906,51.5256866,51.3686485,53.793733,56.4583679,52.6278894,53.2755893,55.8727302,53.564106,53.644164,53.7694467,53.7643905,54.0171572,53.809736,52.6225836,54.9768638,37.9405301,50.3721537,50.9304325,55.8626897,48.7812414,51.2395038,51.5007679,55.1604382,52.5871292,53.9443862,45.807106,45.5482932,46.0489898,45.9423231,48.7331796,50.0648993,52.2406626,59.8516968,45.7578137,57.1482429,48.2530135,56.19294,54.7223891,51.0531646,50.822955,54.8991564,51.9863887,52.2449711,48.2146912,53.4245871,49.2038443],[9.984469000000001,24.8284141,10.199381,-4.0675498,22.2773926,19.9231397,21.0149925,24.1561931,7.8476301,19.0773704,11.3525506,0.473351,-6.9113386,11.3289687,9.967484000000001,7.1489339,13.3537373,15.5914116,-0.4692445,-0.7539102,19.0557303,8.1820533,16.8783015,11.9588396,13.3777575,23.7176113,10.1248577,-0.102332,26.0836178,2.3454288,-0.3638759,2.3554167,12.5036374,16.8795216,8.651119100000001,12.530452,-1.5063456,-0.6288503,2.0750112,12.524129,-1.1388416,21.6215676,9.176845500000001,-6.2891287,-6.2447658,9.059721700000001,4.7651943,1.4790431,4.9227728,2.3589644,-0.3707639,2.3394599,2.1639318,4.3916199,2.2917525,2.3468101,26.69731,23.7223463,4.5259623,5.7138851,9.456387899999999,11.2828971,15.4098508,14.0262243,13.11656,18.0694968,8.6802221,13.2857453,11.0131611,11.5894399,2.1944334,-3.7185487,23.7038811,9.9378399,9.7191823,10.0049623,24.4782814,9.9579775,10.1112157,-3.3234475,13.3892713,7.2739202,8.783627900000001,8.5830283,7.1831158,9.310892300000001,9.450026100000001,10.0215785,10.3131333,11.5562484,9.1725247,6.9725602,7.9424181,8.717949900000001,8.343495600000001,14.8048512,12.2923802,13.3929202,12.1978185,2.3561335,2.2002377,2.2844431,1.0631211,1.4669244,-0.6050179,1.4721085,16.258396,-7.4330382,-9.186086100000001,-8.6068575,-9.139367500000001,27.6419476,-9.165669599999999,8.6692284,8.338737,9.935211499999999,25.7314803,8.4115959,18.0280516,4.6994247,23.9126526,-0.1154414,6.9170838,12.571506,19.049878,18.0707826,-1.1551324,25.7156546,28.0923586,23.7339112,24.1658206,-7.7279093,10.4016151,23.9163566,15.5754544,-0.1165253,-0.0425485,-1.2425263,11.5798366,13.1945814,11.9684435,11.3983645,25.077039,20.766029,-2.4978164,15.0935383,-8.5305356,2.3562118,-1.5559077,-3.5320624,15.2483591,11.8473735,11.6420153,25.4641628,17.9084885,19.0661558,16.9182675,21.9891024,21.0073798,17.0625425,16.8833076,9.2272468,7.6623484,-0.0407283,6.0774518,7.102656,24.0806469,6.5631006,-2.1450717,12.13666,-6.2568229,7.2610046,8.708105400000001,26.0940867,10.5124356,13.7749912,10.4026444,17.1178057,2.3407278,-7.1393134,5.1115641,5.8654912,4.4611873,4.8651882,5.9589129,14.5539324,8.025055099999999,18.0600201,17.6611566,14.4540567,14.429264,14.4243918,16.4663345,16.0283647,15.9711207,15.9634208,15.9639176,15.9716861,-3.9793675,10.428177,20.1465034,6.5317448,5.1686566,24.6702071,23.77895,26.7195598,-6.9113386,12.9549226,13.3406682,10.5297217,12.9283678,13.7236529,15.4503826,10.9312781,11.5674463,16.369949,13.3270012,8.6565534,7.4138481,9.9697186,4.3762106,5.4903996,-1.2349028,33.3077852,-2.2392287,-1.1520148,-6.2602183,-2.1015832,-1.9225861,-2.9232465,-3.1865143,-2.2338875,-1.2002957,-2.4073164,-1.4892039,-0.08636199999999999,5.0439229,22.2950499,22.2841185,4.7283913,-3.7263997,-3.723503,-2.4081456,-3.7279935,-3.9268777,-6.9428469,-2.9375516,-15.4199397,-5.8465155,-5.9910238,-0.9607057,2.1794153,-3.7114547,-1.6347338,-3.8670408,-8.389939699999999,-8.659728299999999,-7.9052679,-8.4263478,-8.615589,12.3260884,9.1769914,9.189428599999999,8.4244077,13.3969543,14.3304377,12.1134653,16.8689898,10.2174045,9.115005200000001,15.0871615,11.6162266,11.2596814,8.9266209,13.4497978,15.5534064,9.193987099999999,10.9281755,14.2579528,14.2502313,11.8774407,13.3684648,12.3868932,12.515295,12.6295419,14.7804256,8.5599051,7.6890832,11.123057,13.7941163,13.232762,11.0039084,12.4667104,12.4801039,10.7497747,13.5130692,9.6604288,9.2137546,10.8938459,8.493287799999999,8.8523245,11.6383694,7.00329,16.3374816,15.4494833,9.214134899999999,11.3841891,14.2648378,12.3802779,8.463581700000001,7.6131357,8.773664500000001,13.0094886,12.1332854,9.962937699999999,10.7058828,9.956234200000001,8.2565791,11.5889658,2.1636044,2.8273167,2.6486191,-0.3338588,7.0457876,-0.06601219999999999,9.188262399999999,14.3210436,13.4496082,16.3606855,6.9276222,27.5713755,23.5919766,26.0625638,28.6478842,23.5855637,25.5887936,25.4551373,7.1074641,8.667629700000001,5.0664053,4.6159504,3.0878785,5.3580321,-0.5780207000000001,-4.5077377,-3.391815,6.0227088,7.3152697,5.5758564,3.0752614,1.2585756,3.9522476,3.8618764,4.8598485,-0.3647049,2.2644678,-1.6398606,7.7666593,6.8656645,1.4670985,0.6731941,2.1415453,5.9493863,0.153074,5.7673482,4.3925664,4.3810881,6.0227088,2.3400882,2.3440371,2.3378386,4.4102137,3.7282075,4.4866643,5.6864176,6.8519698,5.1754514,4.8902006,23.3316413,-8.485031299999999,-6.2339811,-0.1355703,-2.3276287,-1.7669219,-2.9737549,1.2392143,-9.0559665,-4.2913621,9.9949809,-1.7790322,-0.3737919,-2.7086535,-2.7876979,-1.5545475,-1.1254319,-1.6092794,23.6598593,-4.1381222,-1.3967591,-4.2440401,9.1749422,-0.590375,-2.5503106,-6.6743985,-2.1271104,-1.0466265,15.9639176,13.7293636,14.5039567,13.6390927,19.1455309,19.9248258,21.0202847,17.6329879,4.8320114,-2.0928095,16.4301838,10.181167,25.3358628,3.7301101,4.3925183,23.9150825,5.6680085,-7.1378499,16.4052318,14.5355231,18.7557359],10,null,null,{"interactive":true,"className":"","stroke":true,"color":"#03F","weight":5,"opacity":0.7,"fill":true,"fillColor":"#03F","fillOpacity":0.2},{"showCoverageOnHover":true,"zoomToBoundsOnClick":true,"spiderfyOnMaxZoom":true,"removeOutsideVisibleBounds":true,"spiderLegPolylineOptions":{"weight":1.5,"color":"#222","opacity":0.5},"freezeAtZoom":false},null,["AALBORG UNIVERSITET <br> Denmark <br>Projects: 59","AALTO KORKEAKOULUSAATIO SR <br> Finland <br>Projects: 28","AARHUS UNIVERSITET <br> Denmark <br>Projects: 29","ABERYSTWYTH UNIVERSITY <br> United Kingdom <br>Projects: 1","ABO AKADEMI <br> Finland <br>Projects: 6","AKADEMIA GORNICZO-HUTNICZA IM. STANISLAWA STASZICA W KRAKOWIE <br> Poland <br>Projects: 11","AKADEMIA LEONA KOZMINSKIEGO <br> Poland <br>Projects: 1","AKCIJU SABIEDRIBA TRANSPORTA UN SAKARU INSTITUTS <br> Latvia <br>Projects: 1","ALBERT-LUDWIGS-UNIVERSITAET FREIBURG <br> Germany <br>Projects: 10","ALLATORVOSTUDOMANYI EGYETEM <br> Hungary <br>Projects: 1","ALMA MATER STUDIORUM - UNIVERSITA DI BOLOGNA <br> Italy <br>Projects: 38","ANGLIA RUSKIN UNIVERSITY <br> United Kingdom <br>Projects: 4","Agricultural Catchments Programme <br> Ireland <br>Projects: 1","BAUHAUS-UNIVERSITAET WEIMAR <br> Germany <br>Projects: 1","BAYERISCHES ZENTRUM FUR ANGEWANDTEENERGIEFORSCHUNG ZAE EV <br> Germany <br>Projects: 1","BERGISCHE UNIVERSITAET  WUPPERTAL <br> Germany <br>Projects: 4","BERLINER HOCHSCHULE FUR TECHNIK <br> Germany <br>Projects: 1","BLEKINGE TEKNISKA HOGSKOLA <br> Sweden <br>Projects: 1","BRUNEL UNIVERSITY LONDON <br> United Kingdom <br>Projects: 16","BUCKINGHAMSHIRE NEW UNIVERSITY <br> United Kingdom <br>Projects: 1","BUDAPESTI MUSZAKI ES GAZDASAGTUDOMANYI EGYETEM <br> Hungary <br>Projects: 10","CARL VON OSSIETZKY UNIVERSITAET OLDENBURG <br> Germany <br>Projects: 5","CENTRO INTERNAZIONALE DI ALTISTUDI AGRONOMICI MEDITERRANEI <br> Italy <br>Projects: 1","CHALMERS TEKNISKA HOGSKOLA AB <br> Sweden <br>Projects: 59","CHARITE - UNIVERSITAETSMEDIZIN BERLIN <br> Germany <br>Projects: 1","CHAROKOPEIO PANEPISTIMIO <br> Greece <br>Projects: 3","CHRISTIAN-ALBRECHTS-UNIVERSITAET  ZU KIEL <br> Germany <br>Projects: 4","CITY ST GEORGES UNIVERSITY OF LONDON <br> United Kingdom <br>Projects: 11","COLEGIUL TEHNIC DE ARHITECTURA SI LUCRARI PUBLICE I.N. SOCOLESCU <br> Romania <br>Projects: 1","COLLEGE DE FRANCE <br> France <br>Projects: 3","COMMUNAUTE UNIVERSITES ET ETABLISSEMENTS NORMANDIE UNIVERSITE <br> France <br>Projects: 1","CONSERVATOIRE NATIONAL DES ARTS ET METIERS <br> France <br>Projects: 1","CONSORZIO INTERUNIVERSITARIO NAZIONALE PER L'INFORMATICA <br> Italy <br>Projects: 1","CONSORZIO INTERUNIVERSITARIO NAZIONALE PER LA REATTIVITA CHIMICA E LA CATALISI - CIRCC <br> Italy <br>Projects: 1","CONSTRUCTOR UNIVERSITY BREMEN GGMBH <br> Germany <br>Projects: 1","COPENHAGEN BUSINESS SCHOOL <br> Denmark <br>Projects: 6","COVENTRY UNIVERSITY <br> United Kingdom <br>Projects: 3","CRANFIELD UNIVERSITY <br> United Kingdom <br>Projects: 21","CY CERGY PARIS UNIVERSITE <br> France <br>Projects: 1","DANMARKS TEKNISKE UNIVERSITET <br> Denmark <br>Projects: 116","DE MONTFORT UNIVERSITY <br> United Kingdom <br>Projects: 4","DEBRECENI EGYETEM <br> Hungary <br>Projects: 1","DUALE HOCHSCHULE BADEN-WURTTEMBERG <br> Germany <br>Projects: 1","DUBLIN CITY UNIVERSITY <br> Ireland <br>Projects: 4","DUBLIN INSTITUTE FOR ADVANCED STUDIES <br> Ireland <br>Projects: 1","EBERHARD KARLS UNIVERSITAET TUEBINGEN <br> Germany <br>Projects: 1","ECOLE CENTRALE DE LYON <br> France <br>Projects: 4","ECOLE NATIONALE DE L AVIATION CIVILE <br> France <br>Projects: 3","ECOLE NATIONALE DES TRAVAUX PUBLICS DE L'ETAT <br> France <br>Projects: 2","ECOLE NATIONALE SUPERIEURE D'ARTS ET METIERS <br> France <br>Projects: 7","ECOLE NATIONALE SUPERIEURE D'INGENIEURS DE CAEN <br> France <br>Projects: 1","ECOLE NATIONALE SUPERIEURE DES MINES DE PARIS <br> France <br>Projects: 13","ECOLE NORMALE SUPERIEURE PARIS-SACLAY <br> France <br>Projects: 1","ECOLE ROYALE MILITAIRE - KONINKLIJKE MILITAIRE SCHOOL <br> Belgium <br>Projects: 1","ECOLE SUPERIEURE D'INGENIEURS EN ELECTROTECHNIQUE ET ELECTRONIQUE D'AMIENS <br> France <br>Projects: 1","ECOLE SUPERIEURE DE PHYSIQUE ET DECHIMIE INDUSTRIELLES DE LA VILLE DEPARIS <br> France <br>Projects: 4","EESTI MAAULIKOOL <br> Estonia <br>Projects: 3","ELLINIKOS GEORGIKOS ORGANISMOS - DIMITRA <br> Greece <br>Projects: 1","ERASMUS UNIVERSITEIT ROTTERDAM <br> Netherlands <br>Projects: 2","ETABLISSEMENT D'ENSEIGNEMENT SUPERIEUR CONSULAIRE GRENOBLE ECOLE DE MANAGEMENT <br> France <br>Projects: 1","EUROPA-UNIVERSITAET FLENSBURG <br> Germany <br>Projects: 3","EUROPEAN UNIVERSITY INSTITUTE <br> Italy <br>Projects: 2","FH JOANNEUM GESELLSCHAFT MBH <br> Austria <br>Projects: 1","FH OO STUDIENBETRIEBS GMBH <br> Austria <br>Projects: 1","FILMUNIVERSITAT BABELSBERG KONRAD WOLF <br> Germany <br>Projects: 1","FORSVARSHOGSKOLAN <br> Sweden <br>Projects: 1","FRANKFURT SCHOOL OF FINANCE & MANAGEMENT GEMEINNUTZIGE GMBH <br> Germany <br>Projects: 2","FREIE UNIVERSITAET BERLIN <br> Germany <br>Projects: 5","FRIEDRICH-ALEXANDER-UNIVERSITAET ERLANGEN-NUERNBERG <br> Germany <br>Projects: 23","FRIEDRICH-SCHILLER-UNIVERSITÄT JENA <br> Germany <br>Projects: 4","FUNDACIO PER A LA UNIVERSITAT OBERTA DE CATALUNYA <br> Spain <br>Projects: 1","FUNDACION UNIVERSITARIA SAN PABLO-CEU <br> Spain <br>Projects: 1","GEOPONIKO PANEPISTIMION ATHINON <br> Greece <br>Projects: 6","GEORG-AUGUST-UNIVERSITAT GOTTINGEN STIFTUNG OFFENTLICHEN RECHTS <br> Germany <br>Projects: 4","GOTTFRIED WILHELM LEIBNIZ UNIVERSITAET HANNOVER <br> Germany <br>Projects: 21","HAFENCITY UNIVERSITAT HAMBURG <br> Germany <br>Projects: 1","HAMEEN AMMATTIKORKEAKOULU OY <br> Finland <br>Projects: 1","HAWK HOCHSCHULE FUR ANGEWANDTE WISSENSCHAFT UND KUNST FACHHOCHSCHULE HILDESHEIM/HOLZMINDEN/GOTTINGEN <br> Germany <br>Projects: 1","HELMUT SCHMIDT UNIVERSITAT UNIVERSITAT DER BUNDESWEHR HAMBURG <br> Germany <br>Projects: 1","HERIOT-WATT UNIVERSITY <br> United Kingdom <br>Projects: 5","HERTIE SCHOOL GEMMEINNUTZIGE GMBH <br> Germany <br>Projects: 1","HOCHSCHULE BOCHUM FUR TECHNIK, WIRTSCHAFT UND GESUNDHEIT <br> Germany <br>Projects: 4","HOCHSCHULE BREMEN <br> Germany <br>Projects: 2","HOCHSCHULE BREMERHAVEN - UNIVERSITY OF APPLIED SCIENCES <br> Germany <br>Projects: 1","HOCHSCHULE EMDEN/LEER <br> Germany <br>Projects: 3","HOCHSCHULE ESSLINGEN <br> Germany <br>Projects: 1","HOCHSCHULE FLENSBURG <br> Germany <br>Projects: 1","HOCHSCHULE FUR ANGEWANDTE WISSENSCHAFTEN HAMBURG <br> Germany <br>Projects: 1","HOCHSCHULE FUR ANGEWANDTE WISSENSCHAFTEN KEMPTEN <br> Germany <br>Projects: 1","HOCHSCHULE FUR ANGEWANDTE WISSENSCHAFTEN MUNCHEN <br> Germany <br>Projects: 2","HOCHSCHULE FUR TECHNIK STUTTGART <br> Germany <br>Projects: 2","HOCHSCHULE FUR TECHNIK UND WIRTSCHAFT DES SAARLANDES <br> Germany <br>Projects: 1","HOCHSCHULE OFFENBURG <br> Germany <br>Projects: 2","HOCHSCHULE PFORZHEIM <br> Germany <br>Projects: 1","HOCHSCHULE WORMS <br> Germany <br>Projects: 1","HOCHSCHULE ZITTAU/GOERLITZ <br> Germany <br>Projects: 1","HOGSKOLAN VAST <br> Sweden <br>Projects: 1","HUMBOLDT-UNIVERSITAET ZU BERLIN <br> Germany <br>Projects: 1","Hochschule für angewandte Wissenschaften Landshut <br> Germany <br>Projects: 2","INSTITUT DE PHYSIQUE DU GLOBE DE PARIS <br> France <br>Projects: 2","INSTITUT MINES-TELECOM <br> France <br>Projects: 20","INSTITUT NATIONAL D'ENSEIGNEMENT SUPERIEUR POUR L'AGRICULTURE, L'ALIMENTATION ET L'ENVIRONNEMENT <br> France <br>Projects: 1","INSTITUT NATIONAL DES SCIENCES APPLIQUEES DE ROUEN <br> France <br>Projects: 1","INSTITUT NATIONAL DES SCIENCES APPLIQUEES DE TOULOUSE <br> France <br>Projects: 2","INSTITUT POLYTECHNIQUE DE BORDEAUX <br> France <br>Projects: 2","INSTITUT SUPERIEUR DE L'AERONAUTIQUE ET DE L'ESPACE <br> France <br>Projects: 5","INSTITUTE OF SCIENCE AND TECHNOLOGY AUSTRIA <br> Austria <br>Projects: 5","INSTITUTO POLITÉCNICO DE PORTALEGRE <br> Portugal <br>Projects: 3","INSTITUTO SUPERIOR DE AGRONOMIA <br> Portugal <br>Projects: 1","INSTITUTO SUPERIOR DE ENGENHARIA DO PORTO <br> Portugal <br>Projects: 4","INSTITUTO SUPERIOR TECNICO <br> Portugal <br>Projects: 5","ITA-SUOMEN YLIOPISTO <br> Finland <br>Projects: 7","Iscte - Instituto Universitário de Lisboa <br> Portugal <br>Projects: 1","JOHANN WOLFGANG GOETHE-UNIVERSITAET FRANKFURT AM MAIN <br> Germany <br>Projects: 3","JOHANNES GUTENBERG-UNIVERSITAT MAINZ <br> Germany <br>Projects: 7","JULIUS-MAXIMILIANS-UNIVERSITAT WURZBURG <br> Germany <br>Projects: 4","JYVASKYLAN YLIOPISTO <br> Finland <br>Projects: 6","KARLSRUHER INSTITUT FUER TECHNOLOGIE <br> Germany <br>Projects: 71","KAROLINSKA INSTITUTET <br> Sweden <br>Projects: 1","KATHOLIEKE UNIVERSITEIT LEUVEN <br> Belgium <br>Projects: 54","KAUNO TECHNOLOGIJOS UNIVERSITETAS <br> Lithuania <br>Projects: 6","KING'S COLLEGE LONDON <br> United Kingdom <br>Projects: 3","KLINIKUM DER UNIVERSITAET ZU KOELN <br> Germany <br>Projects: 1","KOBENHAVNS UNIVERSITET <br> Denmark <br>Projects: 19","KOZEP-EUROPAI EGYETEM <br> Hungary <br>Projects: 1","KUNGLIGA TEKNISKA HOEGSKOLAN <br> Sweden <br>Projects: 52","LA ROCHELLE UNIVERSITE <br> France <br>Projects: 2","LAPIN AMMATTIKORKEAKOULU OY <br> Finland <br>Projects: 1","LAPPEENRANNAN-LAHDEN TEKNILLINEN YLIOPISTO LUT <br> Finland <br>Projects: 17","LATVIJAS BIOZINATNU UN TEHNOLOGIJU UNIVERSITATE <br> Latvia <br>Projects: 1","LATVIJAS UNIVERSITATES CIETVIELU FIZIKAS INSTITUTS <br> Latvia <br>Projects: 2","LETTERKENNY INSTITUTE OF TECHNOLOGY <br> Ireland <br>Projects: 1","LEUPHANA UNIVERSITAT LUNEBURG <br> Germany <br>Projects: 1","LIETUVOS SVEIKATOS MOKSLU UNIVERSITETAS <br> Lithuania <br>Projects: 1","LINKOPINGS UNIVERSITET <br> Sweden <br>Projects: 15","LONDON SCHOOL OF ECONOMICS AND POLITICAL SCIENCE <br> United Kingdom <br>Projects: 2","LONDON SOUTH BANK UNIVERSITY LBG <br> United Kingdom <br>Projects: 3","LOUGHBOROUGH UNIVERSITY <br> United Kingdom <br>Projects: 12","LUDWIG-MAXIMILIANS-UNIVERSITAET MUENCHEN <br> Germany <br>Projects: 9","LUNDS UNIVERSITET <br> Sweden <br>Projects: 26","MARTIN-LUTHER-UNIVERSITAT HALLE-WITTENBERG <br> Germany <br>Projects: 2","MCI MANAGEMENT CENTER INNSBRUCK INTERNATIONALE HOCHSCHULE GMBH <br> Austria <br>Projects: 1","METROPOLIA AMMATTIKORKEAKOULU OY <br> Finland <br>Projects: 1","MISKOLCI EGYETEM <br> Hungary <br>Projects: 3","MONDRAGON GOI ESKOLA POLITEKNIKOA JOSE MARIA ARIZMENDIARRIETA S COOP <br> Spain <br>Projects: 7","MONTANUNIVERSITAET LEOBEN <br> Austria <br>Projects: 8","MUNSTER TECHNOLOGICAL UNIVERSITY <br> Ireland <br>Projects: 6","MUSEUM NATIONAL D'HISTOIRE NATURELLE <br> France <br>Projects: 2","NANTES UNIVERSITE <br> France <br>Projects: 3","NORTH HIGHLAND COLLEGE <br> United Kingdom <br>Projects: 1","OREBRO UNIVERSITY <br> Sweden <br>Projects: 1","OSTBAYERISCHE TECHNISCHE HOCHSCHULEAMBERG-WEIDEN <br> Germany <br>Projects: 1","OTTO-VON-GUERICKE-UNIVERSITAET MAGDEBURG <br> Germany <br>Projects: 4","OULUN YLIOPISTO <br> Finland <br>Projects: 13","PANNON EGYETEM - UNIVERSITY OF PANNONIA <br> Hungary <br>Projects: 2","PAZMANY PETER KATOLIKUS EGYETEM <br> Hungary <br>Projects: 1","POLITECHNIKA POZNANSKA <br> Poland <br>Projects: 1","POLITECHNIKA RZESZOWSKA IM IGNACEGO  LUKASIEWICZA PRZ <br> Poland <br>Projects: 4","POLITECHNIKA WARSZAWSKA <br> Poland <br>Projects: 5","POLITECHNIKA WROCLAWSKA <br> Poland <br>Projects: 8","POLITECNICO DI BARI <br> Italy <br>Projects: 6","POLITECNICO DI MILANO <br> Italy <br>Projects: 111","POLITECNICO DI TORINO <br> Italy <br>Projects: 70","QUEEN MARY UNIVERSITY OF LONDON <br> United Kingdom <br>Projects: 7","RHEINISCH-WESTFAELISCHE TECHNISCHE HOCHSCHULE AACHEN <br> Germany <br>Projects: 73","RHEINISCHE FRIEDRICH-WILHELMS-UNIVERSITAT BONN <br> Germany <br>Projects: 3","RIGAS TEHNISKA UNIVERSITATE <br> Latvia <br>Projects: 8","RIJKSUNIVERSITEIT GRONINGEN <br> Netherlands <br>Projects: 24","ROBERT GORDON UNIVERSITY <br> United Kingdom <br>Projects: 1","ROSKILDE UNIVERSITET <br> Denmark <br>Projects: 1","ROYAL COLLEGE OF SURGEONS IN IRELAND <br> Ireland <br>Projects: 1","RUHR-UNIVERSITAET BOCHUM <br> Germany <br>Projects: 14","RUPRECHT-KARLS-UNIVERSITAET HEIDELBERG <br> Germany <br>Projects: 2","SCOALA NATIONALA DE STUDII POLITICE SI ADMINISTRATIVE <br> Romania <br>Projects: 1","SCUOLA IMT (ISTITUZIONI, MERCATI, TECNOLOGIE) ALTI STUDI DI LUCCA <br> Italy <br>Projects: 2","SCUOLA INTERNAZIONALE SUPERIORE DI STUDI AVANZATI DI TRIESTE <br> Italy <br>Projects: 2","SCUOLA SUPERIORE DI STUDI UNIVERSITARI E DI PERFEZIONAMENTO S ANNA <br> Italy <br>Projects: 8","SLOVENSKA TECHNICKA UNIVERZITA V BRATISLAVE <br> Slovakia <br>Projects: 14","SORBONNE UNIVERSITE <br> France <br>Projects: 9","SOUTH EAST TECHNOLOGICAL UNIVERSITY <br> Ireland <br>Projects: 2","STICHTING HOGESCHOOL VOOR DE KUNSTEN UTRECHT <br> Netherlands <br>Projects: 1","STICHTING RADBOUD UNIVERSITEIT <br> Netherlands <br>Projects: 4","STICHTING STC-GROUP <br> Netherlands <br>Projects: 1","STICHTING VU <br> Netherlands <br>Projects: 10","STICHTING ZUYD HOGESCHOOL <br> Netherlands <br>Projects: 1","STIFTUNG EUROPA-UNIVERSITAT VIADRINA FRANKFURT (ODER) <br> Germany <br>Projects: 1","STIFTUNG FACHHOCHSCHULE OSNABRUCK <br> Germany <br>Projects: 1","STOCKHOLMS UNIVERSITET <br> Sweden <br>Projects: 8","SVERIGES LANTBRUKSUNIVERSITET <br> Sweden <br>Projects: 7","SVEUCILISTE U RIJECI <br> Croatia <br>Projects: 1","SVEUCILISTE U RIJECI, MEDICINSKI FAKULTET <br> Croatia <br>Projects: 1","SVEUCILISTE U RIJECI-TEHNICKI FAKULTET <br> Croatia <br>Projects: 1","SVEUCILISTE U SPLITU, FAKULTET ELEKTROTEHNIKE, STROJARSTVA I BRODOGRADNJE <br> Croatia <br>Projects: 2","SVEUCILISTE U ZAGREBU AGRONOMSKI FAKULTET <br> Croatia <br>Projects: 1","SVEUCILISTE U ZAGREBU FAKULTET ELEKTROTEHNIKE I RACUNARSTVA <br> Croatia <br>Projects: 4","SVEUCILISTE U ZAGREBU GRADEVINSKI FAKULTET <br> Croatia <br>Projects: 3","SVEUCILISTE U ZAGREBU RUDARSKO-GEOLOSKO-NAFTNI FAKULTET <br> Croatia <br>Projects: 1","SVEUCILISTE U ZAGREBU, FAKULTET STROJARSTVA I BRODOGRADNJE <br> Croatia <br>Projects: 17","SWANSEA UNIVERSITY <br> United Kingdom <br>Projects: 9","SYDDANSK UNIVERSITET <br> Denmark <br>Projects: 8","SZEGEDI TUDOMANYEGYETEM <br> Hungary <br>Projects: 5","Stichting Hanzehogeschool Groningen <br> Netherlands <br>Projects: 3","Stichting Hogeschool Utrecht <br> Netherlands <br>Projects: 1","TALLINNA TEHNIKAÜLIKOOL <br> Estonia <br>Projects: 11","TAMPEREEN KORKEAKOULUSAATIO SR <br> Finland <br>Projects: 19","TARTU ULIKOOL <br> Estonia <br>Projects: 10","TEAGASC - AGRICULTURE AND FOOD DEVELOPMENT AUTHORITY <br> Ireland <br>Projects: 3","TECHNISCHE HOCHSCHULE DEGGENDORF <br> Germany <br>Projects: 1","TECHNISCHE UNIVERSITAET BERGAKADEMIE FREIBERG <br> Germany <br>Projects: 4","TECHNISCHE UNIVERSITAET BRAUNSCHWEIG <br> Germany <br>Projects: 12","TECHNISCHE UNIVERSITAET CHEMNITZ <br> Germany <br>Projects: 5","TECHNISCHE UNIVERSITAET DRESDEN <br> Germany <br>Projects: 26","TECHNISCHE UNIVERSITAET GRAZ <br> Austria <br>Projects: 20","TECHNISCHE UNIVERSITAET ILMENAU <br> Germany <br>Projects: 6","TECHNISCHE UNIVERSITAET MUENCHEN <br> Germany <br>Projects: 59","TECHNISCHE UNIVERSITAET WIEN <br> Austria <br>Projects: 38","TECHNISCHE UNIVERSITAT BERLIN <br> Germany <br>Projects: 35","TECHNISCHE UNIVERSITAT DARMSTADT <br> Germany <br>Projects: 25","TECHNISCHE UNIVERSITAT DORTMUND <br> Germany <br>Projects: 8","TECHNISCHE UNIVERSITAT HAMBURG <br> Germany <br>Projects: 11","TECHNISCHE UNIVERSITEIT DELFT <br> Netherlands <br>Projects: 125","TECHNISCHE UNIVERSITEIT EINDHOVEN <br> Netherlands <br>Projects: 54","TEESSIDE UNIVERSITY <br> United Kingdom <br>Projects: 5","THE CYPRUS INSTITUTE <br> Cyprus <br>Projects: 6","THE MANCHESTER METROPOLITAN UNIVERSITY <br> United Kingdom <br>Projects: 9","THE NOTTINGHAM TRENT UNIVERSITY <br> United Kingdom <br>Projects: 3","THE PROVOST, FELLOWS, FOUNDATION SCHOLARS & THE OTHER MEMBERS OF BOARD, OF THE COLLEGE OF THE HOLY & UNDIVIDED TRINITY OF QUEEN ELIZABETH NEAR DUBLIN <br> Ireland <br>Projects: 12","THE UNIVERSITY COURT OF THE UNIVERSITY OF ABERDEEN <br> United Kingdom <br>Projects: 4","THE UNIVERSITY OF BIRMINGHAM <br> United Kingdom <br>Projects: 24","THE UNIVERSITY OF CUMBRIA LBG <br> United Kingdom <br>Projects: 1","THE UNIVERSITY OF EDINBURGH <br> United Kingdom <br>Projects: 24","THE UNIVERSITY OF MANCHESTER <br> United Kingdom <br>Projects: 33","THE UNIVERSITY OF NOTTINGHAM <br> United Kingdom <br>Projects: 32","THE UNIVERSITY OF SALFORD <br> United Kingdom <br>Projects: 1","THE UNIVERSITY OF SHEFFIELD <br> United Kingdom <br>Projects: 34","THE UNIVERSITY OF SUSSEX <br> United Kingdom <br>Projects: 4","TILBURG UNIVERSITY- UNIVERSITEIT VAN TILBURG <br> Netherlands <br>Projects: 1","TURUN AMMATTIKORKEAKOULU OY <br> Finland <br>Projects: 1","TURUN YLIOPISTO <br> Finland <br>Projects: 7","UC LEUVEN <br> Belgium <br>Projects: 1","UNIVERSIDAD CARLOS III DE MADRID <br> Spain <br>Projects: 9","UNIVERSIDAD COMPLUTENSE DE MADRID <br> Spain <br>Projects: 8","UNIVERSIDAD DE ALMERIA <br> Spain <br>Projects: 6","UNIVERSIDAD DE BURGOS <br> Spain <br>Projects: 7","UNIVERSIDAD DE CASTILLA - LA MANCHA <br> Spain <br>Projects: 6","UNIVERSIDAD DE HUELVA <br> Spain <br>Projects: 1","UNIVERSIDAD DE LA IGLESIA DE DEUSTO ENTIDAD RELIGIOSA <br> Spain <br>Projects: 2","UNIVERSIDAD DE LAS PALMAS DE GRAN CANARIA <br> Spain <br>Projects: 1","UNIVERSIDAD DE OVIEDO <br> Spain <br>Projects: 2","UNIVERSIDAD DE SEVILLA <br> Spain <br>Projects: 14","UNIVERSIDAD DE ZARAGOZA <br> Spain <br>Projects: 10","UNIVERSIDAD POMPEU FABRA <br> Spain <br>Projects: 4","UNIVERSIDAD PONTIFICIA COMILLAS <br> Spain <br>Projects: 7","UNIVERSIDAD PUBLICA DE NAVARRA <br> Spain <br>Projects: 2","UNIVERSIDAD REY JUAN CARLOS <br> Spain <br>Projects: 5","UNIVERSIDADE DA CORUNA <br> Spain <br>Projects: 7","UNIVERSIDADE DE AVEIRO <br> Portugal <br>Projects: 9","UNIVERSIDADE DE EVORA <br> Portugal <br>Projects: 7","UNIVERSIDADE DO MINHO <br> Portugal <br>Projects: 2","UNIVERSIDADE DO PORTO <br> Portugal <br>Projects: 10","UNIVERSITA CA' FOSCARI  VENEZIA <br> Italy <br>Projects: 2","UNIVERSITA CATTOLICA DEL SACRO CUORE <br> Italy <br>Projects: 2","UNIVERSITA COMMERCIALE LUIGI BOCCONI <br> Italy <br>Projects: 1","UNIVERSITA DEGLI STUDI DEL PIEMONTE ORIENTALE AMEDEO AVOGADRO <br> Italy <br>Projects: 3","UNIVERSITA DEGLI STUDI DELL'AQUILA <br> Italy <br>Projects: 3","UNIVERSITA DEGLI STUDI DELLA CAMPANIA LUIGI VANVITELLI <br> Italy <br>Projects: 8","UNIVERSITA DEGLI STUDI DELLA TUSCIA <br> Italy <br>Projects: 1","UNIVERSITA DEGLI STUDI DI BARI ALDO MORO <br> Italy <br>Projects: 5","UNIVERSITA DEGLI STUDI DI BRESCIA <br> Italy <br>Projects: 3","UNIVERSITA DEGLI STUDI DI CAGLIARI <br> Italy <br>Projects: 5","UNIVERSITA DEGLI STUDI DI CATANIA <br> Italy <br>Projects: 3","UNIVERSITA DEGLI STUDI DI FERRARA <br> Italy <br>Projects: 7","UNIVERSITA DEGLI STUDI DI FIRENZE <br> Italy <br>Projects: 20","UNIVERSITA DEGLI STUDI DI GENOVA <br> Italy <br>Projects: 20","UNIVERSITA DEGLI STUDI DI MACERATA <br> Italy <br>Projects: 1","UNIVERSITA DEGLI STUDI DI MESSINA <br> Italy <br>Projects: 6","UNIVERSITA DEGLI STUDI DI MILANO <br> Italy <br>Projects: 9","UNIVERSITA DEGLI STUDI DI MODENA E REGGIO EMILIA <br> Italy <br>Projects: 9","UNIVERSITA DEGLI STUDI DI NAPOLI FEDERICO II <br> Italy <br>Projects: 17","UNIVERSITA DEGLI STUDI DI NAPOLI PARTHENOPE <br> Italy <br>Projects: 4","UNIVERSITA DEGLI STUDI DI PADOVA <br> Italy <br>Projects: 31","UNIVERSITA DEGLI STUDI DI PALERMO <br> Italy <br>Projects: 6","UNIVERSITA DEGLI STUDI DI PERUGIA <br> Italy <br>Projects: 9","UNIVERSITA DEGLI STUDI DI ROMA LA SAPIENZA <br> Italy <br>Projects: 17","UNIVERSITA DEGLI STUDI DI ROMA TOR VERGATA <br> Italy <br>Projects: 8","UNIVERSITA DEGLI STUDI DI SALERNO <br> Italy <br>Projects: 11","UNIVERSITA DEGLI STUDI DI SASSARI <br> Italy <br>Projects: 2","UNIVERSITA DEGLI STUDI DI TORINO <br> Italy <br>Projects: 13","UNIVERSITA DEGLI STUDI DI TRENTO <br> Italy <br>Projects: 8","UNIVERSITA DEGLI STUDI DI TRIESTE <br> Italy <br>Projects: 9","UNIVERSITA DEGLI STUDI DI UDINE <br> Italy <br>Projects: 3","UNIVERSITA DEGLI STUDI DI VERONA <br> Italy <br>Projects: 2","UNIVERSITA DEGLI STUDI GUGLIELMO MARCONI - TELEMATICA <br> Italy <br>Projects: 1","UNIVERSITA DEGLI STUDI ROMA TRE <br> Italy <br>Projects: 3","UNIVERSITA DI PISA <br> Italy <br>Projects: 24","UNIVERSITA POLITECNICA DELLE MARCHE <br> Italy <br>Projects: 3","UNIVERSITA' DEGLI STUDI DI BERGAMO <br> Italy <br>Projects: 3","UNIVERSITA' DEGLI STUDI DI MILANO-BICOCCA <br> Italy <br>Projects: 4","UNIVERSITAET AUGSBURG <br> Germany <br>Projects: 1","UNIVERSITAET BIELEFELD <br> Germany <br>Projects: 3","UNIVERSITAET BREMEN <br> Germany <br>Projects: 6","UNIVERSITAET DER BUNDESWEHR MUENCHEN <br> Germany <br>Projects: 1","UNIVERSITAET DUISBURG-ESSEN <br> Germany <br>Projects: 7","UNIVERSITAET FUER BODENKULTUR WIEN <br> Austria <br>Projects: 11","UNIVERSITAET GRAZ <br> Austria <br>Projects: 9","UNIVERSITAET HOHENHEIM <br> Germany <br>Projects: 6","UNIVERSITAET INNSBRUCK <br> Austria <br>Projects: 4","UNIVERSITAET KLAGENFURT <br> Austria <br>Projects: 1","UNIVERSITAET LEIPZIG <br> Germany <br>Projects: 3","UNIVERSITAET MANNHEIM <br> Germany <br>Projects: 1","UNIVERSITAET MUENSTER <br> Germany <br>Projects: 2","UNIVERSITAET PADERBORN <br> Germany <br>Projects: 1","UNIVERSITAET POTSDAM <br> Germany <br>Projects: 3","UNIVERSITAET ROSTOCK <br> Germany <br>Projects: 7","UNIVERSITAET ULM <br> Germany <br>Projects: 3","UNIVERSITAET zu LUEBECK <br> Germany <br>Projects: 1","UNIVERSITAETSKLINIKUM WUERZBURG - KLINIKUM DER BAYERISCHEN JULIUS-MAXIMILIANS-UNIVERSITAT <br> Germany <br>Projects: 1","UNIVERSITAETSMEDIZIN DER JOHANNES GUTENBERG-UNIVERSITAET MAINZ <br> Germany <br>Projects: 1","UNIVERSITAT BAYREUTH <br> Germany <br>Projects: 7","UNIVERSITAT DE BARCELONA <br> Spain <br>Projects: 4","UNIVERSITAT DE GIRONA <br> Spain <br>Projects: 8","UNIVERSITAT DE LES ILLES BALEARS <br> Spain <br>Projects: 4","UNIVERSITAT DE VALENCIA <br> Spain <br>Projects: 9","UNIVERSITAT DES SAARLANDES <br> Germany <br>Projects: 5","UNIVERSITAT JAUME I DE CASTELLON <br> Spain <br>Projects: 4","UNIVERSITAT KONSTANZ <br> Germany <br>Projects: 1","UNIVERSITAT LINZ <br> Austria <br>Projects: 2","UNIVERSITAT PASSAU <br> Germany <br>Projects: 4","UNIVERSITAT WIEN <br> Austria <br>Projects: 6","UNIVERSITAT ZU KOLN <br> Germany <br>Projects: 5","UNIVERSITATEA ALEXANDRU IOAN CUZA DIN IASI <br> Romania <br>Projects: 1","UNIVERSITATEA BABES BOLYAI <br> Romania <br>Projects: 4","UNIVERSITATEA DIN BUCURESTI <br> Romania <br>Projects: 3","UNIVERSITATEA MARITIMA DIN CONSTANTA <br> Romania <br>Projects: 1","UNIVERSITATEA TEHNICA CLUJ-NAPOCA <br> Romania <br>Projects: 8","UNIVERSITATEA TRANSILVANIA DIN BRASOV <br> Romania <br>Projects: 2","UNIVERSITATEA VALAHIA TARGOVISTE <br> Romania <br>Projects: 2","UNIVERSITATSKLINIKUM BONN <br> Germany <br>Projects: 1","UNIVERSITATSKLINIKUM HEIDELBERG <br> Germany <br>Projects: 1","UNIVERSITE BOURGOGNE EUROPE <br> France <br>Projects: 1","UNIVERSITE CATHOLIQUE DE LOUVAIN <br> Belgium <br>Projects: 9","UNIVERSITE CLERMONT AUVERGNE <br> France <br>Projects: 1","UNIVERSITE D'AIX MARSEILLE <br> France <br>Projects: 3","UNIVERSITE DE BORDEAUX <br> France <br>Projects: 11","UNIVERSITE DE BREST <br> France <br>Projects: 3","UNIVERSITE DE BRETAGNE SUD <br> France <br>Projects: 1","UNIVERSITE DE FRANCHE-COMTE <br> France <br>Projects: 2","UNIVERSITE DE HAUTE ALSACE UHA <br> France <br>Projects: 3","UNIVERSITE DE LIEGE <br> Belgium <br>Projects: 12","UNIVERSITE DE LILLE <br> France <br>Projects: 9","UNIVERSITE DE LIMOGES <br> France <br>Projects: 1","UNIVERSITE DE MONS <br> Belgium <br>Projects: 3","UNIVERSITE DE MONTPELLIER <br> France <br>Projects: 19","UNIVERSITE DE NAMUR <br> Belgium <br>Projects: 1","UNIVERSITE DE PAU ET DES PAYS DE L'ADOUR <br> France <br>Projects: 6","UNIVERSITE DE PICARDIE JULES VERNE <br> France <br>Projects: 5","UNIVERSITE DE RENNES <br> France <br>Projects: 3","UNIVERSITE DE STRASBOURG <br> France <br>Projects: 7","UNIVERSITE DE TECHNOLOGIE DE BELFORT - MONTBELIARD <br> France <br>Projects: 5","UNIVERSITE DE TOULOUSE <br> France <br>Projects: 1","UNIVERSITE DE TOURS <br> France <br>Projects: 2","UNIVERSITE DE VERSAILLES SAINT-QUENTIN EN YVELINES <br> France <br>Projects: 2","UNIVERSITE DU LUXEMBOURG <br> Luxembourg <br>Projects: 4","UNIVERSITE DU MANS <br> France <br>Projects: 2","UNIVERSITE GRENOBLE ALPES <br> France <br>Projects: 13","UNIVERSITE JEAN MONNET <br> France <br>Projects: 2","UNIVERSITE LIBRE DE BRUXELLES <br> Belgium <br>Projects: 11","UNIVERSITE MARIE ET LOUIS PASTEUR <br> France <br>Projects: 7","UNIVERSITE PARIS CITE <br> France <br>Projects: 5","UNIVERSITE PARIS I PANTHEON-SORBONNE <br> France <br>Projects: 1","UNIVERSITE PARIS SCIENCES ET LETTRES <br> France <br>Projects: 1","UNIVERSITEIT ANTWERPEN <br> Belgium <br>Projects: 17","UNIVERSITEIT GENT <br> Belgium <br>Projects: 43","UNIVERSITEIT LEIDEN <br> Netherlands <br>Projects: 18","UNIVERSITEIT MAASTRICHT <br> Netherlands <br>Projects: 9","UNIVERSITEIT TWENTE <br> Netherlands <br>Projects: 24","UNIVERSITEIT UTRECHT <br> Netherlands <br>Projects: 28","UNIVERSITEIT VAN AMSTERDAM <br> Netherlands <br>Projects: 10","UNIVERSITET PO ARCHITEKTURA STROITELSTVO I GEODEZIJA <br> Bulgaria <br>Projects: 3","UNIVERSITY COLLEGE CORK -  NATIONAL UNIVERSITY OF IRELAND, CORK <br> Ireland <br>Projects: 19","UNIVERSITY COLLEGE DUBLIN, NATIONAL UNIVERSITY OF IRELAND, DUBLIN <br> Ireland <br>Projects: 11","UNIVERSITY COLLEGE LONDON <br> United Kingdom <br>Projects: 22","UNIVERSITY OF BATH <br> United Kingdom <br>Projects: 5","UNIVERSITY OF BRADFORD <br> United Kingdom <br>Projects: 1","UNIVERSITY OF DUNDEE <br> United Kingdom <br>Projects: 3","UNIVERSITY OF EAST ANGLIA <br> United Kingdom <br>Projects: 5","UNIVERSITY OF GALWAY <br> Ireland <br>Projects: 14","UNIVERSITY OF GLASGOW <br> United Kingdom <br>Projects: 14","UNIVERSITY OF HAMBURG <br> Germany <br>Projects: 1","UNIVERSITY OF HUDDERSFIELD <br> United Kingdom <br>Projects: 4","UNIVERSITY OF HULL <br> United Kingdom <br>Projects: 4","UNIVERSITY OF LANCASHIRE <br> United Kingdom <br>Projects: 1","UNIVERSITY OF LANCASTER <br> United Kingdom <br>Projects: 8","UNIVERSITY OF LEEDS <br> United Kingdom <br>Projects: 19","UNIVERSITY OF LEICESTER <br> United Kingdom <br>Projects: 5","UNIVERSITY OF NORTHUMBRIA AT NEWCASTLE <br> United Kingdom <br>Projects: 2","UNIVERSITY OF PIRAEUS RESEARCH CENTER <br> Greece <br>Projects: 6","UNIVERSITY OF PLYMOUTH <br> United Kingdom <br>Projects: 5","UNIVERSITY OF SOUTHAMPTON <br> United Kingdom <br>Projects: 17","UNIVERSITY OF STRATHCLYDE <br> United Kingdom <br>Projects: 38","UNIVERSITY OF STUTTGART <br> Germany <br>Projects: 31","UNIVERSITY OF SURREY <br> United Kingdom <br>Projects: 12","UNIVERSITY OF THE WEST OF ENGLAND, BRISTOL <br> United Kingdom <br>Projects: 2","UNIVERSITY OF ULSTER <br> United Kingdom <br>Projects: 8","UNIVERSITY OF WOLVERHAMPTON <br> United Kingdom <br>Projects: 2","UNIVERSITY OF YORK <br> United Kingdom <br>Projects: 3","UNIVERSITY OF ZAGREB - FACULTY OF FOOD TECHNOLOGY AND BIOTECHNOLOGY - UZAG PBF <br> Croatia <br>Projects: 1","UNIVERZA NA PRIMORSKEM UNIVERSITA DEL LITORALE <br> Slovenia <br>Projects: 1","UNIVERZA V LJUBLJANI <br> Slovenia <br>Projects: 20","UNIVERZA V NOVI GORICI <br> Slovenia <br>Projects: 2","UNIVERZITA MATEJA BELA V BANSKEJ BYSTRICI <br> Slovakia <br>Projects: 1","UNIWERSYTET ROLNICZY IM. HUGONA KOLLATAJA W KRAKOWIE <br> Poland <br>Projects: 1","UNIWERSYTET WARSZAWSKI <br> Poland <br>Projects: 11","UPPSALA UNIVERSITET <br> Sweden <br>Projects: 22","University Claude Bernard in Lyon <br> France <br>Projects: 1","University of Aberdeen <br> United Kingdom <br>Projects: 1","VETERINAERMEDIZINISCHE UNIVERSITAET WIEN <br> Austria <br>Projects: 1","VIA UNIVERSITY COLLEGE <br> Denmark <br>Projects: 1","VILNIAUS GEDIMINO TECHNIKOS UNIVERSITETAS <br> Lithuania <br>Projects: 3","VLERICK BUSINESS SCHOOL <br> Belgium <br>Projects: 1","VRIJE UNIVERSITEIT BRUSSEL <br> Belgium <br>Projects: 20","VYTAUTO DIDZIOJO UNIVERSITETAS <br> Lithuania <br>Projects: 4","WAGENINGEN UNIVERSITY <br> Netherlands <br>Projects: 21","WATERFORD INSTITUTE OF TECHNOLOGY <br> Ireland <br>Projects: 2","WIRTSCHAFTSUNIVERSITAT WIEN <br> Austria <br>Projects: 2","ZACHODNIOPOMORSKI UNIWERSYTET TECHNOLOGICZNY W SZCZECINIE <br> Poland <br>Projects: 1","ZILINSKA UNIVERZITA V ZILINE <br> Slovakia <br>Projects: 1"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[28.0991191,66.48364479999999],"lng":[-15.4199397,33.3077852]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
